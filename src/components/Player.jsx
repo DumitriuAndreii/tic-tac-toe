@@ -1,21 +1,24 @@
 import React, { useState } from "react";
 
-export const Player = ({ initialName, symbol }) => {
-  const [playerName, setPlayerName] = useState(initialName)
+export const Player = ({ initialName, symbol, isActive, onChangeName }) => {
+  const [playerName, setPlayerName] = useState(initialName);
   const [isEditing, setIsEditing] = useState(false);
   const handleClick = () => {
-    setIsEditing(editing => !editing);
+    setIsEditing((editing) => !editing);
+    if (isEditing) {
+      onChangeName(symbol, playerName);
+    }
   };
 
   const handleChange = (e) => {
     setPlayerName(e.target.value);
-  }
+  };
 
   return (
-    <li>
+    <li className={isActive ? "active" : undefined}>
       <span className="player ">
         {isEditing ? (
-          <input autoFocus value={playerName} onChange={handleChange}/>
+          <input autoFocus value={playerName} onChange={handleChange} />
         ) : (
           <span className="player-name">{playerName}</span>
         )}
